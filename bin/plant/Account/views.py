@@ -66,7 +66,7 @@ def LoginView(request):
     else:
         return render(request,'login.html')
 
-def HomeView(request):
+def ProfileView(request):
     if not request.user.is_active :
         return HttpResponse("<h1>sorry!you should be log in !</h1>")
     if request.user.is_active :
@@ -90,7 +90,7 @@ def HomeView(request):
                 email = l.email
                 break
         context['email'] = email
-        return render(request,'home.html',context)
+        return render(request,'profile.html',context)
 
 def UploadView(request):
     context = {}
