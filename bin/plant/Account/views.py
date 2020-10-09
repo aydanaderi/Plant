@@ -26,8 +26,7 @@ def SignupView(request):
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
-            response = HttpResponse(request, 'login.html')
-            response.set_cookie('username',request.user.username)
+            CookiesView(request)
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
             for i in raw_password :
@@ -43,7 +42,7 @@ def SignupView(request):
             recipient_list = [email,]
             send_mail( subject, message, email_from, recipient_list )
             login(request, user)
-            return redirect('/home')
+            return redirect('/profile')
     else:
         form = forms.SignUpForm()
     return render(request, 'signup.html', {'form': form,'help_text' : help_text})
@@ -124,3 +123,8 @@ def UserView(request):
             profile = str(l.profile)
             list.append(profile)
         return JsonResponse(list ,safe = False)
+def CookiesView(request):
+    response = HttpResponse(request, 'login.html')
+    response.set_cookie('username',request.user.username)
+    return response
+
