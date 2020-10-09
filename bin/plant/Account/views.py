@@ -2,16 +2,14 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
 from . import models,forms
 
 def BasicView(request):
-    return render(request, 'basic.html')
+    return render(request,'basic.html')
 
 def SignupView(request):
     help_text = "enter a phone number like 9---------"
@@ -66,7 +64,7 @@ def LoginView(request):
         else:
             return render(request, 'login.html', {'error': 'Username or Password incorrect.'})
     else:
-        return render(request, 'login.html')
+        return render(request,'login.html')
 
 def HomeView(request):
     if not request.user.is_active :
