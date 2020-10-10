@@ -27,6 +27,11 @@ def SignupView(request):
             request.session['username'] = request.user.username
             request.session.save()
             request.session.set_test_cookie()
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+                print("You're logged in.")
+            else:
+                print("Please enable cookies and try again.")
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
             for i in raw_password :
@@ -56,10 +61,14 @@ def LoginView(request):
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
-            response = HttpResponse(request, 'login.html')
-            response.set_cookie('username',request.user.username)
+            request.session.set_test_cookie()
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+                print("You're logged in.")
+            else:
+                print("Please enable cookies and try again.")
             login(request, user)
-            return redirect('/home')
+            return redirect('/profile')
         else:
             return render(request, 'login.html', {'error': 'Username or Password incorrect.'})
     else:
