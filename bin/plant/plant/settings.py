@@ -130,3 +130,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "09017313196"
+
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"

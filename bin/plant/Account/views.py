@@ -23,10 +23,10 @@ def SignupView(request):
             email = form.cleaned_data.get('email')
             user.save()
             user = authenticate(username = user.username, password = raw_password , email = 'email')
-            request.session.set_expiry(0)
+            request.session.set_expiry(None)
             request.session['username'] = request.user.username
             request.session.save()
-            CookiesView(request)
+            request.session.set_test_cookie()
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
             for i in raw_password :
@@ -123,8 +123,4 @@ def UserView(request):
             profile = str(l.profile)
             list.append(profile)
         return JsonResponse(list ,safe = False)
-def CookiesView(request):
-    response = HttpResponse(request, 'login.html')
-    response.set_cookie('username',request.user.username)
-    return response
 
