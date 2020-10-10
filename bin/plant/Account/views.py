@@ -23,7 +23,7 @@ def SignupView(request):
             email = form.cleaned_data.get('email')
             user.save()
             user = authenticate(username = user.username, password = raw_password , email = 'email')
-            request.session.set_expiry(None)
+            request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
             request.session.set_test_cookie()
