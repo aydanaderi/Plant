@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login,logout,authenticate
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.conf import settings
@@ -133,3 +133,6 @@ def UserView(request):
             list.append(profile)
         return JsonResponse(list ,safe = False)
 
+def LogoutView(request):
+    logout(request)
+    return render(request,'logout.html')

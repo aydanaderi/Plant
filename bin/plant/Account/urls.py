@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^user/$', views.UserView, name = 'UserView'),
     url(r'basic/$', views.BasicView, name = 'BasicView'),
     url(r'upload/$', views.UploadView, name = 'UploadView'),
+url(r'logout/$', views.LogoutView, name = 'LogoutView'),
 ]
