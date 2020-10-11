@@ -134,5 +134,8 @@ def UserView(request):
         return JsonResponse(list ,safe = False)
 
 def LogoutView(request):
+    user = request.user
+    user.is_active = False
+    user.save()
     logout(request)
     return render(request,'logout.html')
