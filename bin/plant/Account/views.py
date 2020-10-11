@@ -3,6 +3,8 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login,logout,authenticate
 from django.core.files.storage import FileSystemStorage
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
@@ -139,3 +141,28 @@ def LogoutView(request):
     user.save()
     logout(request)
     return render(request,'logout.html')
+
+def Change_passwordView(request):
+    help_text = "enter a phone number like 9---------"
+    if request.method == 'POST':
+        form = forms.ChangePasswordForm(request.user, request.POST)
+        form.old_password = request.user.password
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            raw_password = form.cleaned_data.get('new_password')
+            user = authenticate(password = raw_password)
+            user.save()
+            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            password = ''
+            for i in raw_password:
+                position = alphabet.find(i)
+                newposition = (position + 5) % 62
+                password += alphabet[newposition]
+            db = models.Information.objects.update(password = raw_password)
+            db.save()
+            return redirect('/profile')
+    else:
+        form = forms.ChangePasswordForm(request.user)
+    return render(request, 'change_password.html', {'form': form, 'help_text': help_text})
