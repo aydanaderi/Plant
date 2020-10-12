@@ -9,8 +9,9 @@ class SignUpForm(UserCreationForm):
     password2 = forms.CharField(max_length = 50,validators = [alphanumeric],widget = forms.PasswordInput())
     email = forms.EmailField(max_length = 254)
 
-class ChangePasswordForm(PasswordChangeForm):
+"""class ChangePasswordForm(PasswordChangeForm):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
     old_password = forms.CharField(max_length = 50, validators = [alphanumeric])
     new_password = forms.CharField(max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())
     confirm_password = forms.CharField(max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())
+"""
