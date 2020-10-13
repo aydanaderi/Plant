@@ -148,9 +148,13 @@ def Change_passwordView(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            raw_password = form.cleaned_data.get('new_password1')
+            password = form.cleaned_data.get('old_password')
+            db = models.Information.objects.filter(password = password ).update(password = raw_password)
+            db.save()
+            return redirect('/basic')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
