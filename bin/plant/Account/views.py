@@ -120,11 +120,14 @@ def UserView(request):
             list.append(l.username)
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
             password = ''
-            for i in l.password :
-                pos = alphabet.find(i)
-                newpos = (pos - 5) % 62
-                password += alphabet[newpos]
-            list.append(password)
+            if l.newpassword == '0':
+                for i in l.password :
+                    pos = alphabet.find(i)
+                    newpos = (pos - 5) % 62
+                    password += alphabet[newpos]
+                list.append(password)
+            else:
+                list.append(l.password)
             list.append(l.newpassword)
             list.append(l.date)
             time = l.date
@@ -161,7 +164,7 @@ def Change_passwordView(request):
                     newpos = (pos - 5) % 62
                     password += alphabet[newpos]
                 if password == oldpassword :
-                    models.Information.objects.update(newpassword = raw_password)
+                    models.Information.objects.update(newpassword = '1',password = raw_password)
             return redirect('/basic')
         else:
             messages.error(request, 'Please correct the error below.')
