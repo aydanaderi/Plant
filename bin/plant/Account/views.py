@@ -25,7 +25,7 @@ def SignupView(request):
             raw_password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
             user.save()
-            user = authenticate(username = user.username, password = raw_password , email = 'email')
+            user = authenticate(username = user.username, password = raw_password , newpassword = '0' ,email = 'email')
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
@@ -42,7 +42,7 @@ def SignupView(request):
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
             date = datetime.now()
-            db = models.Information.objects.create(username = user.username, password = password,date = date,email = email)
+            db = models.Information.objects.create(username = user.username, password = password,newpassword = '0',date = date,email = email)
             db.save()
             subject = 'Signed up'
             message = 'hello! welcom to our site. your sign up was successful'
@@ -110,7 +110,7 @@ def UploadView(request):
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name,uploaded_file)
         context['url'] = fs.url(name)
-        inf = models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))
+        models.Information.objects.filter(username = request.user.username).update(profile = fs.url(name))
     return render(request,'upload.html',context)
 
 def UserView(request):
@@ -125,6 +125,7 @@ def UserView(request):
                 newpos = (pos - 5) % 62
                 password += alphabet[newpos]
             list.append(password)
+            list.append(l.newpassword)
             list.append(l.date)
             time = l.date
             now = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
@@ -151,9 +152,16 @@ def Change_passwordView(request):
             update_session_auth_hash(request, user)
             messages.success(request, 'Your password was successfully updated!')
             raw_password = form.cleaned_data.get('new_password1')
-            password = form.cleaned_data.get('old_password')
-            db = models.Information.objects.filter(password = password ).update(password = raw_password)
-            db.save()
+            oldpassword = form.cleaned_data.get('old_password')
+            for l in models.Information.objects.all():
+                alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+                password = ''
+                for i in l.password:
+                    pos = alphabet.find(i)
+                    newpos = (pos - 5) % 62
+                    password += alphabet[newpos]
+                if password == oldpassword :
+                    models.Information.objects.update(newpassword = raw_password)
             return redirect('/basic')
         else:
             messages.error(request, 'Please correct the error below.')
