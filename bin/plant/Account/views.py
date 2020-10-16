@@ -186,11 +186,10 @@ def Check_emailView(request):
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
                     return redirect('/resetpasssword',username)
-    return  render(request,'password_reset_email.html',{'error': 'Username or Password is incorrect.'})
+    return  render(request,'password_reset_email.html')
 
 def Reset_passwordView(request):
     if request.method == 'POST':
-        form = forms.ResetpasswordForm()
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 == password2 :
@@ -207,6 +206,6 @@ def Reset_passwordView(request):
                         print("Please enable cookies and try again.")
                     models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
                     return redirect('/profile')
-    return render(request,'reset_password.html',{'form' : form})
+    return render(request,'reset_password.html')
 
 
