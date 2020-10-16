@@ -73,7 +73,7 @@ def LoginView(request):
             login(request, user)
             return redirect('/profile')
         else:
-            return render(request, 'login.html', {'error': 'Username or Password incorrect.'})
+            return render(request, 'login.html', {'error': 'Username or Password is incorrect.'})
     else:
         return render(request,'login.html')
 
@@ -170,7 +170,7 @@ def Change_passwordView(request):
                     if password == oldpassword :
                         models.Information.objects.filter(username = l.username).update(newpassword = '1',password = raw_password)
                         break
-            return redirect('/basic')
+            return redirect('/profile')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -186,10 +186,11 @@ def Check_emailView(request):
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
                     return redirect('/resetpasssword',username)
-    return  render(request,'password_reset_email.html',{'error' : 'your username or email is incorrect'})
+    return  render(request,'password_reset_email.html',{'error': 'Username or Password is incorrect.'})
 
 def Reset_passwordView(request):
     if request.method == 'POST':
+        form = forms.ResetpasswordForm()
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         if password1 == password2 :
@@ -205,7 +206,7 @@ def Reset_passwordView(request):
                     else:
                         print("Please enable cookies and try again.")
                     models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
-                    break
-    return render(request,'reset_password.html')
+                    return redirect('/profile')
+    return render(request,'reset_password.html',{'form' : form})
 
 
