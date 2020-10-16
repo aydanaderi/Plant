@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm,PasswordResetForm
 from django.core.validators import RegexValidator
 
 class SignUpForm(UserCreationForm):
@@ -9,9 +9,8 @@ class SignUpForm(UserCreationForm):
     password2 = forms.CharField(max_length = 50,validators = [alphanumeric],widget = forms.PasswordInput())
     email = forms.EmailField(max_length = 254)
 
-"""class ChangePasswordForm(PasswordChangeForm):
+class ResetpasswordForm(PasswordResetForm):
+    email = forms.EmailField(max_length = 254)
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
-    old_password = forms.CharField(max_length = 50, validators = [alphanumeric])
-    new_password = forms.CharField(max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())
-    confirm_password = forms.CharField(max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())
-"""
+    password1 = forms.CharField(max_length = 50,validators = [alphanumeric],widget = forms.PasswordInput())
+    password2 = forms.CharField(max_length=50, validators=[alphanumeric], widget=forms.PasswordInput())

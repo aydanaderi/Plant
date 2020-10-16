@@ -4,7 +4,7 @@ from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login,logout,authenticate
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm,PasswordResetForm
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -159,15 +159,53 @@ def Change_passwordView(request):
             for l in models.Information.objects.all():
                 alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
                 password = ''
-                for i in l.password:
-                    pos = alphabet.find(i)
-                    newpos = (pos - 5) % 62
-                    password += alphabet[newpos]
-                if password == oldpassword :
-                    models.Information.objects.update(newpassword = '1',password = raw_password)
+                if l.newpassword == '0' :
+                    for i in l.password:
+                        pos = alphabet.find(i)
+                        newpos = (pos - 5) % 62
+                        password += alphabet[newpos]
+                else :
+                    password = l.password
+                if str(l.username) == str(request.user) :
+                    if password == oldpassword :
+                        models.Information.objects.filter(username = l.username).update(newpassword = '1',password = raw_password)
+                        break
             return redirect('/basic')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+def Check_emailView(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        for l in models.Information.objects.all():
+            if str(l.username) == str(username) :
+                if l.email == email :
+                    models.Information.objects.filter(username = l.username).update(newpassword = l.username)
+                    return redirect('/resetpasssword',username)
+    return  render(request,'password_reset_email.html',{'error' : 'your username or email is incorrect'})
+
+def Reset_passwordView(request):
+    if request.method == 'POST':
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        if password1 == password2 :
+            for l in models.Information.objects.all():
+                if str(l.newpassword) == str(l.username) :
+                    request.session.set_expiry(0)
+                    request.session['username'] = l.username
+                    request.session.save()
+                    request.session.set_test_cookie()
+                    if request.session.test_cookie_worked():
+                        request.session.delete_test_cookie()
+                        print("You're logged in.")
+                    else:
+                        print("Please enable cookies and try again.")
+                    models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
+                    break
+    return render(request,'reset_password.html')
+
+

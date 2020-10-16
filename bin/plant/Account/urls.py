@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'upload/$', views.UploadView, name = 'UploadView'),
     url(r'logout/$', views.LogoutView, name = 'LogoutView'),
     url(r'change_password/$', views.Change_passwordView, name = 'Change_passwordView'),
+    url(r'checkemail/$', views.Check_emailView, name = 'check_email'),
+    url(r'resetpasssword/$', views.Reset_passwordView, name = 'reset_password'),
 ]
