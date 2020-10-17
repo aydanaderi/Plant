@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
-from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -180,6 +179,7 @@ def Check_emailView(request):
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
                     return redirect('/resetpasssword',username)
+        return render(request, 'password_reset_email.html',{'error' : 'username or email is incorrect'})
     return  render(request,'password_reset_email.html')
 
 def Reset_passwordView(request):
@@ -189,6 +189,7 @@ def Reset_passwordView(request):
         if password1 == password2 :
             for l in models.Information.objects.all():
                 if str(l.newpassword) == str(l.username) :
+                    models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
                     request.session.set_expiry(0)
                     request.session['username'] = l.username
                     request.session.save()
@@ -197,6 +198,6 @@ def Reset_passwordView(request):
                         request.session.delete_test_cookie()
                     else:
                         print("Please enable cookies and try again.")
-                    models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
                     return redirect('/profile')
+        return render(request, 'reset_password.html',{'error' : 'The two passwords entered do not match'})
     return render(request,'reset_password.html')
