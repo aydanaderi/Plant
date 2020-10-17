@@ -128,13 +128,8 @@ def UserView(request):
             else:
                 list.append(l.password)
             list.append(l.newpassword)
-            list.append(l.date)
-            time = l.date
-            now = datetime(now.year, now.month, now.day, now.hour, now.minute, now.second)
-            time = datetime(time.year, time.month, time.day, time.hour, time.minute, time.second)
-            period = now - time
-            list.append(str(period))
             list.append(l.email)
+            list.append(l.date)
             profile = str(l.profile)
             list.append(profile)
         return JsonResponse(list ,safe = False)
