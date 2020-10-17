@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>token Page</title>
+  </head>
+  <body>
+<div style = "width : 250 px ; height : 500 px">
+</div>
+{% block content %}
+
+<div style = "width : 250 px ; height : 500 px">
+<center>
+  <center>  <h2>enter token</h2></center>
+  <table border = "5" cellspacing = "0" cellpadding = "13" style = "color: green">
+                <form action = "" method="POST">
+                    {% csrf_token %}
+                    <tr>
+                      <td>
+                        token :<br/>
+                        <label for="token" class="bmd-label-floating"></label>
+                        <input type="text" class="form-control" id="token" name="token" required><br/>
+                  </td>
+                </tr>
+                    <tr>
+                  <td>
+                    <center>
+                    <button type="submit" class="btn btn-primary btn-raised">
+                         Submit
+                    </button>
+                  </center>
+                  </td>
+                </tr>
+                </form>
+              </table>
+</center>
+    </div>
+  {% endblock %}
+   </body>
+</html>

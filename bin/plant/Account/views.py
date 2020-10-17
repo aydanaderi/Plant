@@ -4,12 +4,17 @@ from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login,logout,authenticate
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import PasswordChangeForm,PasswordResetForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
 from . import models,forms
+
+from django.contrib.auth.tokens import default_token_generator
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode
 
 def BasicView(request):
     return render(request,'basic.html')
@@ -32,7 +37,6 @@ def SignupView(request):
             request.session.set_test_cookie()
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
-                print("You're logged in.")
             else:
                 print("Please enable cookies and try again.")
             alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -201,11 +205,8 @@ def Reset_passwordView(request):
                     request.session.set_test_cookie()
                     if request.session.test_cookie_worked():
                         request.session.delete_test_cookie()
-                        print("You're logged in.")
                     else:
                         print("Please enable cookies and try again.")
                     models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
                     return redirect('/profile')
     return render(request,'reset_password.html')
-
-
