@@ -9,4 +9,3 @@ class Information(models.Model) :
     time = models.CharField(max_length = 500)
     email = models.EmailField(max_length = 254)
     profile = models.FileField()
-    random = models.IntegerField(max_length = 100000, default = 9999)
