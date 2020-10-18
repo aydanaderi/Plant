@@ -108,7 +108,7 @@ def ProfileView(request):
         context['email'] = email
         return render(request,'profile.html',context)
 
-def UploadView(request):
+def UploadprofileView(request):
     context = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
