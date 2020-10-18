@@ -4,6 +4,7 @@ from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -65,7 +66,6 @@ def LoginView(request):
         password = request.POST['password']
         user = authenticate(request, username = username, password = password)
         for l in models.Information.objects.all():
-            print(l.password)
             if str(l.username) == username :
                 if l.password == password :
                     request.session.set_expiry(0)
@@ -147,19 +147,9 @@ def Change_passwordView(request):
             raw_password = form.cleaned_data.get('new_password1')
             oldpassword = form.cleaned_data.get('old_password')
             for l in models.Information.objects.all():
-                alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-                password = ''
-                if l.newpassword == '0' :
-                    for i in l.password:
-                        pos = alphabet.find(i)
-                        newpos = (pos - 5) % 62
-                        password += alphabet[newpos]
-                else :
-                    password = l.password
                 if str(l.username) == str(request.user) :
-                    if password == oldpassword :
-                        models.Information.objects.filter(username = l.username).update(newpassword = '1',password = raw_password)
-                        break
+                    if l.password == oldpassword :
+                        models.Information.objects.filter(username = l.username).update(password = raw_password)
             return redirect('/profile')
         else:
             messages.error(request, 'Please correct the error below.')
@@ -187,6 +177,9 @@ def Reset_passwordView(request):
             for l in models.Information.objects.all():
                 if str(l.newpassword) == str(l.username) :
                     models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
+                    user = User.objects.get(username = l.username)
+                    user.set_password(password1)
+                    user.save()
                     request.session.set_expiry(0)
                     request.session['username'] = l.username
                     request.session.save()
@@ -195,6 +188,6 @@ def Reset_passwordView(request):
                         request.session.delete_test_cookie()
                     else:
                         print("Please enable cookies and try again.")
-                    return redirect('/profile')
+                    return redirect('/login')
         return render(request, 'reset_password.html',{'error' : 'The two passwords entered do not match'})
     return render(request,'reset_password.html')
