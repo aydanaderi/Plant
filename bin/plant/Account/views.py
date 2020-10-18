@@ -40,7 +40,13 @@ def SignupView(request):
                 newposition = (position + 5) % 62
                 password += alphabet[newposition]
             date = datetime.now()
-            db = models.Information.objects.create(username = user.username, password = password,newpassword = '0',date = date,email = email)
+            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+            password1 = ''
+            for i in password:
+                pos = alphabet.find(i)
+                newpos = (pos - 5) % 62
+                password1 += alphabet[newpos]
+            db = models.Information.objects.create(username = user.username, password = password1,newpassword = '0',date = date,email = email)
             db.save()
             subject = 'Signed up'
             message = 'hello! welcom to our site. your sign up was successful'
@@ -58,20 +64,21 @@ def LoginView(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username = username, password = password)
-        if user:
-            request.session.set_expiry(0)
-            request.session['username'] = request.user.username
-            request.session.save()
-            request.session.set_test_cookie()
-            if request.session.test_cookie_worked():
-                request.session.delete_test_cookie()
-                print("You're logged in.")
-            else:
-                print("Please enable cookies and try again.")
-            login(request, user)
-            return redirect('/profile')
-        else:
-            return render(request, 'login.html', {'error': 'Username or Password is incorrect.'})
+        for l in models.Information.objects.all():
+            print(l.password)
+            if str(l.username) == username :
+                if l.password == password :
+                    request.session.set_expiry(0)
+                    request.session['username'] = request.user.username
+                    request.session.save()
+                    request.session.set_test_cookie()
+                    if request.session.test_cookie_worked():
+                        request.session.delete_test_cookie()
+                    else:
+                        print("Please enable cookies and try again.")
+                    login(request, user)
+                    return redirect('/profile')
+        return render(request, 'login.html', {'error': 'Username or Password is incorrect.'})
     else:
         return render(request,'login.html')
 
@@ -113,19 +120,9 @@ def UploadView(request):
 
 def UserView(request):
         list = []
-        now = datetime.now()
         for l in models.Information.objects.all():
             list.append(l.username)
-            alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-            password = ''
-            if l.newpassword == '0':
-                for i in l.password :
-                    pos = alphabet.find(i)
-                    newpos = (pos - 5) % 62
-                    password += alphabet[newpos]
-                list.append(password)
-            else:
-                list.append(l.password)
+            list.append(l.password)
             list.append(l.newpassword)
             list.append(l.email)
             list.append(l.date)
