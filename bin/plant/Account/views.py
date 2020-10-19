@@ -165,7 +165,7 @@ def Check_emailView(request):
             if str(l.username) == str(username) :
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
-                    return redirect('/resetpasssword',username)
+                    return redirect('/resetpasssword')
         return render(request, 'password_reset_email.html',{'error' : 'username or email is incorrect'})
     return  render(request,'password_reset_email.html')
 
@@ -173,21 +173,17 @@ def Reset_passwordView(request):
     if request.method == 'POST':
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        if password1 == password2 :
-            for l in models.Information.objects.all():
-                if str(l.newpassword) == str(l.username) :
-                    models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
-                    user = User.objects.get(username = l.username)
-                    user.set_password(password1)
-                    user.save()
-                    request.session.set_expiry(0)
-                    request.session['username'] = l.username
-                    request.session.save()
-                    request.session.set_test_cookie()
-                    if request.session.test_cookie_worked():
-                        request.session.delete_test_cookie()
-                    else:
-                        print("Please enable cookies and try again.")
-                    return redirect('/login')
-        return render(request, 'reset_password.html',{'error' : 'The two passwords entered do not match'})
+        form = forms.ResetForm(request.POST)
+        if form.is_valid() :
+            if password1 == password2 :
+                for l in models.Information.objects.all():
+                    if str(l.newpassword) == str(l.username) :
+                        models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
+                        user = User.objects.get(username = l.username)
+                        user.set_password(password1)
+                        user.save()
+                        return redirect('/login')
+            return render(request, 'reset_password.html',{'error' : 'The two passwords entered do not match'})
+        else :
+            return render(request, 'reset_password.html', {'error': 'The password entered is incorrect'})
     return render(request,'reset_password.html')
