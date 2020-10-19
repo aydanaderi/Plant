@@ -11,6 +11,8 @@ from django.conf import settings
 from datetime import datetime
 from . import models,forms
 
+from django.contrib.auth.tokens import default_token_generator
+
 def BasicView(request):
     return render(request,'basic.html')
 
