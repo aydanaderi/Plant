@@ -9,7 +9,7 @@ class SignUpForm(UserCreationForm):
     password2 = forms.CharField(max_length = 50,validators = [alphanumeric],widget = forms.PasswordInput())
     email = forms.EmailField(max_length = 254)
 
-class ResetForm(forms.Form):
+class ResetPasswordForm(forms.Form):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
     password1 = forms.CharField(min_length = 8,max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())
     password2 = forms.CharField(min_length = 8,max_length = 50, validators = [alphanumeric], widget = forms.PasswordInput())

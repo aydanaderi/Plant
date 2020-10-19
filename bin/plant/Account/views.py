@@ -173,7 +173,7 @@ def Reset_passwordView(request):
     if request.method == 'POST':
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-        form = forms.ResetForm(request.POST)
+        form = forms.ResetPasswordForm(request.POST)
         if form.is_valid() :
             if password1 == password2 :
                 for l in models.Information.objects.all():
