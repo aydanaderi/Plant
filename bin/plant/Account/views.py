@@ -108,7 +108,7 @@ def ProfileView(request):
         context['email'] = email
         return render(request,'profile.html',context)
 
-def UploadprofileView(request):
+def UploadـProfileView(request):
     context = {}
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
@@ -178,7 +178,7 @@ def Reset_passwordView(request):
             if password1 == password2 :
                 for l in models.Information.objects.all():
                     if str(l.newpassword) == str(l.username) :
-                        models.Information.objects.filter(username = l.username).update(newpassword = '1',password = password1)
+                        models.Information.objects.filter(username = l.username).update(newpassword = '',password = password1)
                         user = User.objects.get(username = l.username)
                         user.set_password(password1)
                         user.save()

@@ -8,9 +8,9 @@ urlpatterns = [
     url(r'^profile/$', views.ProfileView, name = 'HomeView'),
     url(r'^user/$', views.UserView, name = 'UserView'),
     url(r'basic/$', views.BasicView, name = 'BasicView'),
-    url(r'uploadprofile/$', views.UploadprofileView, name = 'UploadprofileView'),
+    url(r'upload_profile/$', views.UploadـProfileView, name = 'UploadـprofileView'),
     url(r'logout/$', views.LogoutView, name = 'LogoutView'),
     url(r'change_password/$', views.Change_passwordView, name = 'Change_passwordView'),
-    url(r'checkemail/$', views.Check_emailView, name = 'Check_email'),
-    url(r'resetpasssword/$', views.Reset_passwordView, name = 'Reset_password'),
+    url(r'checkـemail/$', views.Check_emailView, name = 'Check_email'),
+    url(r'resetـpasssword/$', views.Reset_passwordView, name = 'Reset_password'),
 ]
