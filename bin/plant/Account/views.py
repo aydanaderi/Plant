@@ -11,8 +11,6 @@ from django.conf import settings
 from datetime import datetime
 from . import models,forms
 
-from django.contrib.auth.tokens import default_token_generator
-
 def BasicView(request):
     return render(request,'basic.html')
 
@@ -167,7 +165,12 @@ def Check_emailView(request):
             if str(l.username) == str(username) :
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
-                    return redirect('/resetpasssword')
+                    subject = 'ًReset Password'
+                    message = 'hello! you want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/reset%D9%80passsword/'
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [email, ]
+                    send_mail(subject, message, email_from, recipient_list)
+                    return HttpResponse('check your inbox!')
         return render(request, 'password_reset_email.html',{'error' : 'username or email is incorrect'})
     return  render(request,'password_reset_email.html')
 
@@ -185,6 +188,7 @@ def Reset_passwordView(request):
                         user.set_password(password1)
                         user.save()
                         return redirect('/login')
+                return redirect('/check_email')
             return render(request, 'reset_password.html',{'error' : 'The two passwords entered do not match'})
         else :
             return render(request, 'reset_password.html', {'error': 'The password entered is incorrect'})
