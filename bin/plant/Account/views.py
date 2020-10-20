@@ -25,7 +25,7 @@ def SignupView(request):
             raw_password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
             user.save()
-            user = authenticate(username = user.username, password = raw_password , newpassword = '0' ,email = 'email')
+            user = authenticate(username = user.username, password = raw_password , newpassword = '' ,email = 'email')
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
@@ -47,7 +47,7 @@ def SignupView(request):
                 pos = alphabet.find(i)
                 newpos = (pos - 5) % 62
                 password1 += alphabet[newpos]
-            db = models.Information.objects.create(username = user.username, password = password1,newpassword = '0',date = date,email = email)
+            db = models.Information.objects.create(username = user.username, password = password1,newpassword = '',date = date,email = email)
             db.save()
             subject = 'Signed up'
             message = 'hello! welcom to our site. your sign up was successful'
