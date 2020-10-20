@@ -166,11 +166,11 @@ def Check_emailView(request):
                 if l.email == email :
                     models.Information.objects.filter(username = l.username).update(newpassword = l.username)
                     subject = 'ًReset Password'
-                    message = 'hello! you want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/reset%D9%80passsword/'
+                    message = 'hello!\nyou want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/reset%D9%80passsword/'
                     email_from = settings.EMAIL_HOST_USER
                     recipient_list = [email, ]
                     send_mail(subject, message, email_from, recipient_list)
-                    return HttpResponse('check your inbox!')
+                    return  render(request,'confirm_email.html')
         return render(request, 'password_reset_email.html',{'error' : 'username or email is incorrect'})
     return  render(request,'password_reset_email.html')
 
