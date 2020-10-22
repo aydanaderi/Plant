@@ -1,7 +1,15 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
 from . import models
 
-def SearchView(request):
+def HomeView(request):
+    return render(request, 'home.html')
 
-    return  HttpResponse('hi')
+def SearchView(request):
+    if request.method == "POST":
+        name = request.POST['search']
+        for l in models.Plant.objects.all():
+            if l.name == name :
+                return redirect('/home')
+        return render(request, 'search.html', {'error': 'یافت نشد'})
+    else:
+        return render(request, 'search.html')
