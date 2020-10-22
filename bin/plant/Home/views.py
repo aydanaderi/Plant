@@ -10,6 +10,8 @@ def SearchView(request):
         for l in models.Plant.objects.all():
             if l.name == name :
                 return redirect('/home')
+            if l.English_name == name :
+                return redirect('/home')
         return render(request, 'search.html', {'error': 'یافت نشد'})
     else:
         return render(request, 'search.html')
