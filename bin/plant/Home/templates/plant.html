@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset = "utf-8">
-    <title>Home Page</title>
+    <title>Plant Page</title>
   </head>
   <body>
 <div style = "width : 250 px ; height : 500 px">
@@ -10,9 +10,25 @@
 
 <div style = "width : 250 px ; height : 500 px">
 <center>
-  <center>  <h2>your choices : </h2></center>
-    {% for l in list %}
-        <h3><a href = "http://127.0.0.1:8000/home/">{{l}}</a></h3>
+    {% for p in plnt %}
+        {% if p.name == db %}
+          name : {{p.name}}<br/>
+          English_name : {{p.English_name}}<br/>
+          irrigation_quantity :  {{p.irrigation_quantity}}<br/>
+          irrigation_quantity : {{p.irrigation}}<br/>
+          temprature_quantity : {{p.temprature_quantity}}<br/>
+          temprature : {{p.temprature}}<br/>
+          light_quantity : {{p.light_quantity}}<br/>
+          light : {{p.light}}<br/>
+          humidity_quantity : {{p.humidity_quantity}}<br/>
+          humidity : {{p.humidity}}<br/>
+          soil : {{p.soil}}<br/>
+          fertilizer : {{p.fertilizer}}<br/>
+          problems : {{p.problems}}<br/>
+          potting : {{p.potting}}<br/>
+          poisonous : {{p.poisonous}}<br/>
+          sensibility : {{p.sensibility}}<br/>
+        {% endif %}
     {% endfor %}
     </center>
 </div>
