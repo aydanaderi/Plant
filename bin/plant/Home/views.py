@@ -14,10 +14,9 @@ def SearchView(request):
             ratio1 = SequenceMatcher(None, l.name, name).ratio()
             if ratio1 > 0.6 :
                 list.append(l.name)
-                print(ratio1)
         if len(list) == 0 :
             return render(request, 'search.html', {'error': 'یافت نشد'})
         else :
-            return render(request,'plant.html')
+            return render(request,'plant.html',{'list' : list})
     else:
         return render(request, 'search.html')

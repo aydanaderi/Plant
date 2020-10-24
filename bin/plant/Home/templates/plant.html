@@ -10,19 +10,12 @@
 
 <div style = "width : 250 px ; height : 500 px">
 <center>
-  <center>  <h2>Search</h2></center>
-                <form action = "" method="POST">
-                    {% csrf_token %}
-                    <p style = "color: red">{{ error }}</p>
-                    <button type="submit" class="btn btn-primary btn-raised">
-                         search
-                    </button>
-                        <label for="search" class="bmd-label-floating"></label>
-                        <input type="search" class="form-control" id="search" name="search" required><br/>
-                </form>
+  <center>  <h2>your choices : </h2></center>
+    {% for l in list %}
+        <h3><a href = "http://127.0.0.1:8000/home/">{{l}}</a></h3>
+    {% endfor %}
     </center>
 </div>
   {% endblock %}
    </body>
 </html>
->
