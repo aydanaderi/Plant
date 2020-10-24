@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Home Page</title>
+  </head>
+  <body>
+<div style = "width : 250 px ; height : 500 px">
+</div>
+{% block content %}
+
+<div style = "width : 250 px ; height : 500 px">
+<center>
+  <center>  <h2>Search</h2></center>
+                <form action = "" method="POST">
+                    {% csrf_token %}
+                    <p style = "color: red">{{ error }}</p>
+                    <button type="submit" class="btn btn-primary btn-raised">
+                         search
+                    </button>
+                        <label for="search" class="bmd-label-floating"></label>
+                        <input type="search" class="form-control" id="search" name="search" required><br/>
+                </form>
+    </center>
+</div>
+  {% endblock %}
+   </body>
+</html>
+>
