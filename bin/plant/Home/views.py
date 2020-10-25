@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from difflib import SequenceMatcher
 from django.views import generic
 from . import models
@@ -29,3 +29,19 @@ def SearchView(request):
             return render(request, 'plant.html', {'db' : db,'plnt' : plnt})
     else:
         return render(request, 'search.html')
+
+def Search(request):
+    if 'term' in request.GET :
+        db = models.Plant.objects.filter(name__icontains = request.GET.get('term'))
+        name = list()
+        for s in db :
+            name.append(s.name)
+            return render(request,'plant1.html',{'name' : name})
+    if request.method == "POST":
+        name = request.POST['search']
+        plnt = models.Plant.objects.all()
+        for l in models.Plant.objects.all():
+            if str(l.name) == str(name) :
+                return render(request, 'plant.html', {'name': name , 'plnt' : plnt})
+        return render(request, 'plant1.html', {'error': 'یافت نشد'})
+    return render(request,'plant1.html')

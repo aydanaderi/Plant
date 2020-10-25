@@ -32,5 +32,8 @@ class Plant(models.Model) :
     poisonous = models.CharField(max_length = 5,choices = answer,default = '')
     sensibility = models.CharField(max_length = 10,choices = amount,default = '')
 
+    def __str__(self):
+        return self.name
+
 
 
