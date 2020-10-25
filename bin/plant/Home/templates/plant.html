@@ -12,22 +12,91 @@
 <center>
     {% for p in plnt %}
         {% if p.name == db %}
+    <table border = "5" cellspacing = "0" cellpadding = "13" style = "color: green">
+        <form action = "" method="POST">
+            {% csrf_token %}
+            <tr>
+                <td>
           name : {{p.name}}<br/>
+                </td>
+                </tr>
+                <tr>
+                  <td>
           English_name : {{p.English_name}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           irrigation_quantity :  {{p.irrigation_quantity}}<br/>
-          irrigation_quantity : {{p.irrigation}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+          irrigation_quantity : {{p.irrigation}}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           temprature_quantity : {{p.temprature_quantity}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           temprature : {{p.temprature}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           light_quantity : {{p.light_quantity}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           light : {{p.light}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           humidity_quantity : {{p.humidity_quantity}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           humidity : {{p.humidity}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           soil : {{p.soil}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           fertilizer : {{p.fertilizer}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           problems : {{p.problems}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           potting : {{p.potting}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           poisonous : {{p.poisonous}}<br/>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
           sensibility : {{p.sensibility}}<br/>
+                  </td>
+                </tr>
+                </form>
+              </table>
         {% endif %}
     {% endfor %}
     </center>
