@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from difflib import SequenceMatcher
-from django.views import generic
 from . import models
 
 def HomeView(request):
@@ -45,8 +44,7 @@ def Search(request):
         for s in db :
             name.append(s.name)
             return render(request,'plant1.html',{'name' : name})"""
-    db = models.Plant.objects.filter(name__icontains=request.GET.get('term'))
-    name = list()
-    for s in db:
-        name.append(s.name)
+    name = []
+    for s in models.Plant.objects.all():
+        name.append(str(s.name))
     return render(request,'plant1.html',{'name' : name})

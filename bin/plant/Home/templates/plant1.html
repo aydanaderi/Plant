@@ -5,9 +5,11 @@
   </head>
   <body>
   <center>
+      {{name}}
   <form method="POST" id = "searchform" >
     {% csrf_token %}
-      <button type="submit" class="btn btn-primary btn-raised" value = "name">
+      <p style = "color: red">{{ error }}</p>
+      <button type="submit" class="btn btn-primary btn-raised" >
                          Search
                     </button>
       <input type = "text" name = "search" id = "search">
@@ -17,7 +19,7 @@
     <script>
   $( function() {
     $( "#search" ).autocomplete({
-      source: {{lst}}
+      source: {{name}}
     });
   });
   </script>
