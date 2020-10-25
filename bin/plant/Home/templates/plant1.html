@@ -4,8 +4,12 @@
     <title>Home Page</title>
   </head>
   <body>
-  <form>
-      <label for = "search">search :</label>
+  <center>
+  <form method="POST" id = "searchform" >
+    {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-raised" value = "name">
+                         Search
+                    </button>
       <input type = "text" name = "search" id = "search">
   </form>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -13,7 +17,8 @@
     <script>
   $( function() {
     $( "#search" ).autocomplete({
-      source: <a href = "http://127.0.0.1:8000/search/"></a>
+      source: {{name}}
     });
   });
   </script>
+    </center>
