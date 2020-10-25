@@ -36,12 +36,17 @@ def Search(request):
         plnt = models.Plant.objects.all()
         for l in models.Plant.objects.all():
             if str(l.name) == str(name) :
+                print(l.name)
                 return render(request, 'plant.html', {'name': name , 'plnt' : plnt})
         return render(request, 'plant1.html', {'error': 'یافت نشد'})
-    if 'term' in request.GET :
+    """if 'term' in request.GET :
         db = models.Plant.objects.filter(name__icontains = request.GET.get('term'))
         name = list()
         for s in db :
             name.append(s.name)
-            return render(request,'plant1.html',{'name' : name})
-    return render(request,'plant1.html')
+            return render(request,'plant1.html',{'name' : name})"""
+    db = models.Plant.objects.filter(name__icontains=request.GET.get('term'))
+    name = list()
+    for s in db:
+        name.append(s.name)
+    return render(request,'plant1.html',{'name' : name})
