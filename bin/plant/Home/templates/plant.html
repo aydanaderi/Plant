@@ -11,7 +11,7 @@
 <div style = "width : 250 px ; height : 500 px">
 <center>
     {% for p in plnt %}
-        {% if p.name == name %}
+        {% if p.name == db %}
     <table border = "5" cellspacing = "0" cellpadding = "13" style = "color: green">
         <form action = "" method="POST">
             {% csrf_token %}

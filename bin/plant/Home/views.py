@@ -1,5 +1,4 @@
-from django.shortcuts import render,redirect
-from django.http import HttpResponse,JsonResponse
+from django.shortcuts import render
 from difflib import SequenceMatcher
 from . import models
 
@@ -9,12 +8,11 @@ def HomeView(request):
 def SearchView(request):
     if request.method == "POST":
         name = request.POST['search']
-        list = []
         max = 0.6
         db = ''
         for l in models.Plant.objects.all():
             ratio1 = SequenceMatcher(None, l.name, name).ratio()
-            if ratio1 > 0.6 :
+            if ratio1 > 0.8 :
                 if ratio1 == 1:
                     db = l.name
                     break
@@ -29,7 +27,7 @@ def SearchView(request):
     else:
         return render(request, 'search.html')
 
-def Search(request):
+"""def Search(request):
     if request.method == "POST":
         name = request.POST['search']
         plnt = models.Plant.objects.all()
@@ -38,13 +36,13 @@ def Search(request):
                 print(l.name)
                 return render(request, 'plant.html', {'name': name , 'plnt' : plnt})
         return render(request, 'plant1.html', {'error': 'یافت نشد'})
-    """if 'term' in request.GET :
-        db = models.Plant.objects.filter(name__icontains = request.GET.get('term'))
-        name = list()
-        for s in db :
-            name.append(s.name)
-            return render(request,'plant1.html',{'name' : name})"""
+    #if 'term' in request.GET :
+    #   db = models.Plant.objects.filter(name__icontains = request.GET.get('term'))
+    #    name = list()
+    #    for s in db :
+    #        name.append(s.name)
+    #        return render(request,'plant1.html',{'name' : name})
     name = []
     for s in models.Plant.objects.all():
         name.append(str(s.name))
-    return render(request,'plant1.html',{'name' : name})
+    return render(request,'plant1.html',{'name' : name})"""
