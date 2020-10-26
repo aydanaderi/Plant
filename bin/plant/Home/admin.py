@@ -3,4 +3,6 @@ from . import models
 
 @admin.register(models.Plant)
 class PlantAdmin(admin.ModelAdmin):
-    model = models.Plant
+    list_display = ('name', 'English_name')
+    list_filter = ('name', 'English_name')
+    search_fields = ('name', 'English_name')

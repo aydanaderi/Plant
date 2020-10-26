@@ -4,4 +4,6 @@ from . import models
 
 @admin.register(models.Information)
 class InformationAdmin(admin.ModelAdmin):
-    model = models.Information
+    list_display = ('username','email')
+    list_filter = ('username','email')
+    search_fields = ('username','email')
