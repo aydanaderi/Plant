@@ -5,4 +5,5 @@ app_name = 'Home'
 urlpatterns = [
     url(r'^home/$', views.HomeView, name = 'HomeView'),
     url(r'^search/$', views.SearchView, name = 'SearchView'),
+    url(r'^search/(?P<name_id>[0-9]+)$', views.ResultView, name = 'ResultView'),
 ]
