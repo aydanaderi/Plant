@@ -15,6 +15,7 @@ class Plant(models.Model) :
         ('yes' , 'yes'),
         ('no' , 'no'),
     )
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length = 500 , default = '')
     English_name = models.CharField(max_length = 500,default = '')
     irrigation_quantity = models.CharField(max_length = 10,choices = amount,default = '')

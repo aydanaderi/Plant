@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <meta charset = "utf-8">
+    <title>Result Page</title>
+  </head>
+  <body>
+  <center>
+        {% for d in db %}
+            {% for name in plnt %}
+                {% if name.name == d %}
+                   <li><a href = "{% url 'Home:ResultView' name.id %}" >{{d}}</a></li> <br/>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </center>
+   </body>
+</html>
