@@ -25,7 +25,7 @@ def SignupView(request):
             raw_password = form.cleaned_data.get('password1')
             email = form.cleaned_data.get('email')
             user.save()
-            user = authenticate(username = user.username, password = raw_password , newpassword = '' ,email = 'email')
+            user = authenticate(username = user.username, password = raw_password ,email = 'email')
             request.session.set_expiry(0)
             request.session['username'] = request.user.username
             request.session.save()
@@ -47,7 +47,7 @@ def SignupView(request):
                 pos = alphabet.find(i)
                 newpos = (pos - 5) % 62
                 password1 += alphabet[newpos]
-            db = models.Information.objects.create(username = user.username, password = password1,newpassword = '',date = date,email = email)
+            db = models.Information.objects.create(username = user.username, password = password1,date = date,email = email)
             db.save()
             subject = 'Signed up'
             message = 'hello! welcom to our site. your sign up was successful'
@@ -123,7 +123,6 @@ def UserView(request):
         for l in models.Information.objects.all():
             list.append(l.username)
             list.append(l.password)
-            list.append(l.newpassword)
             list.append(l.email)
             list.append(l.date)
             profile = str(l.profile)
@@ -164,9 +163,9 @@ def Check_emailView(request):
         for l in models.Information.objects.all():
             if str(l.username) == str(username) :
                 if l.email == email :
-                    models.Information.objects.filter(username = l.username).update(newpassword = l.username)
+                    userid = l.id
                     subject = 'ًReset Password'
-                    message = 'hello!\nyou want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/reset%D9%80passsword/'
+                    message = 'hello!\nyou want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/'+ str(userid) +'/resetـpasssword/'
                     email_from = settings.EMAIL_HOST_USER
                     recipient_list = [email, ]
                     send_mail(subject, message, email_from, recipient_list)
@@ -174,7 +173,7 @@ def Check_emailView(request):
         return render(request, 'password_reset_email.html',{'error' : 'username or email is incorrect'})
     return  render(request,'password_reset_email.html')
 
-def Reset_passwordView(request):
+def Reset_passwordView(request,username_id):
     if request.method == 'POST':
         password1 = request.POST['password1']
         password2 = request.POST['password2']
@@ -182,8 +181,8 @@ def Reset_passwordView(request):
         if form.is_valid() :
             if password1 == password2 :
                 for l in models.Information.objects.all():
-                    if str(l.newpassword) == str(l.username) :
-                        models.Information.objects.filter(username = l.username).update(newpassword = '',password = password1)
+                    if str(username_id) == str(l.id) :
+                        models.Information.objects.filter(username = l.username).update(password = password1)
                         user = User.objects.get(username = l.username)
                         user.set_password(password1)
                         user.save()

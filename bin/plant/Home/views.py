@@ -5,16 +5,6 @@ from . import models
 def HomeView(request):
     return render(request, 'home.html')
 
-"""def SearchView(request):
-    if 'term' in request.GET :
-       db = models.Plant.objects.filter(name__icontains = request.GET.get('term'))
-       ls = list()
-       for s in db :
-            ls.append(s.ls)
-            return render(request,'plant.html',{'ls' : ls})
-       return render(request, 'plant1.html', {'error': 'یافت نشد'})
-    return render(request,'plant1.html')"""
-
 def SearchView(request):
     if request.method == "POST":
         name = request.POST['search']
@@ -30,6 +20,7 @@ def SearchView(request):
             return render(request, 'result.html', {'db' : db,'plnt' : plnt})
     else:
         return render(request, 'search.html')
+
 def ResultView(request,name_id):
     name = get_object_or_404(models.Plant, pk = name_id)
     name = str(name)
