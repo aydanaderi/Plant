@@ -14,7 +14,7 @@ def SearchView(request):
             if ratio > 0.6 :
                 db.append(l.name)
         if db == '' :
-            return render(request, 'search.html', {'error': 'یافت نشد'})
+            return render(request, 'search.html', {'error': 'not found'})
         else :
             plnt = models.Plant.objects.all()
             return render(request, 'result.html', {'db' : db,'plnt' : plnt})
