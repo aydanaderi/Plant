@@ -77,6 +77,7 @@ def LoginView(request):
                     else:
                         print("Please enable cookies and try again.")
                     login(request, user)
+                    messages.success(request,'you loged in!')
                     return redirect('/profile')
         return render(request, 'login.html', {'error': 'Username or Password is incorrect.'})
     else:
