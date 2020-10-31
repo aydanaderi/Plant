@@ -165,7 +165,7 @@ def Check_emailView(request):
                 if l.email == email :
                     userid = l.id
                     subject = 'ًReset Password'
-                    message = 'hello!\nyou want to reset your password!\nplease click on the link\nhttp://127.0.0.1:8000/'+ str(userid) +'/resetـpasssword/'
+                    message = 'hello!\nyou want to reset your password!\nplease click on the link\nwww.goldoonestan.ir/'+ str(userid) +'/resetـpasssword/'
                     email_from = settings.EMAIL_HOST_USER
                     recipient_list = [email, ]
                     send_mail(subject, message, email_from, recipient_list)
