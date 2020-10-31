@@ -119,15 +119,15 @@ def UploadـProfileView(request):
     return render(request,'upload.html',context)
 
 def UserView(request):
-        list = []
+        lst = list()
         for l in models.Information.objects.all():
-            list.append(l.username)
-            list.append(l.password)
-            list.append(l.email)
-            list.append(l.date)
+            lst.append(l.username)
+            lst.append(l.password)
+            lst.append(l.email)
+            lst.append(l.date)
             profile = str(l.profile)
-            list.append(profile)
-        return JsonResponse(list ,safe = False)
+            lst.append(profile)
+        return JsonResponse(lst ,safe = False)
 
 def LogoutView(request):
     user = request.user
