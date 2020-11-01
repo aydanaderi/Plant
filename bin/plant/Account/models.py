@@ -10,4 +10,4 @@ class Information(models.Model) :
     profile = models.FileField()
 
     def __str__(self):
-        return self.username
+        return str(self.username)
