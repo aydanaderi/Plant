@@ -64,7 +64,7 @@ def LoginView(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username = username, password = password)
+        user = authenticate(request, username = username,password = password)
         for l in models.Information.objects.all():
             if str(l.username) == username :
                 if l.password == password :
@@ -76,7 +76,7 @@ def LoginView(request):
                         request.session.delete_test_cookie()
                     else:
                         print("Please enable cookies and try again.")
-                    login(request, user)
+                    login(request,user)
                     return redirect('/profile')
         return render(request, 'login.html', {'error': 'Username or Password is incorrect.'})
     else:
@@ -130,11 +130,14 @@ def UserView(request):
         return JsonResponse(lst ,safe = False)
 
 def LogoutView(request):
-    user = request.user
-    user.is_active = False
-    user.save()
-    logout(request)
-    return render(request,'logout.html')
+    if not request.user.is_active :
+        return HttpResponse("<h1>sorry!you should be log in !</h1>")
+    if request.user.is_active :
+        user = request.user
+        user.is_active = False
+        user.save()
+        logout(request)
+        return render(request,'logout.html')
 
 def Change_passwordView(request):
     if request.method == 'POST':
