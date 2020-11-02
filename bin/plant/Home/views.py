@@ -8,7 +8,7 @@ def SearchView(request):
         db = list()
         for l in models.Plant.objects.all():
             ratio = SequenceMatcher(None, l.name, name).ratio()
-            if ratio > 0.9 :
+            if ratio > 0.8 :
                 db.append(l.name)
         if db == [] :
             return render(request, 'search.html', {'error': 'not found'})
