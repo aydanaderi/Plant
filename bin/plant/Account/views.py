@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from django.contrib.auth import login,logout,authenticate,update_session_auth_hash
 from django.core.files.storage import FileSystemStorage
-from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm,AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -130,14 +130,8 @@ def UserView(request):
         return JsonResponse(lst ,safe = False)
 
 def LogoutView(request):
-    if not request.user.is_active :
-        return HttpResponse("<h1>sorry!you should be log in !</h1>")
-    if request.user.is_active :
-        user = request.user
-        user.is_active = False
-        user.save()
-        logout(request)
-        return render(request,'logout.html')
+    logout(request)
+    return render(request,'logout.html')
 
 def Change_passwordView(request):
     if request.method == 'POST':
