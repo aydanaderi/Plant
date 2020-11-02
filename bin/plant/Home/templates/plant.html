@@ -12,87 +12,108 @@
 <center>
     {% for p in plnt %}
         {% if p.name == name %}
-    <table border = "5" cellspacing = "0" cellpadding = "13" style = "color: green">
+    <h1>{{p}}</h1><br/>
+    <table border = "5" cellspacing = "0" cellpadding = "13">
         <form action = "" method="POST">
             {% csrf_token %}
             <tr>
                 <td>
-          name : {{p.name}}<br/>
+          name
                 </td>
-                </tr>
-                <tr>
-                  <td>
-          English_name : {{p.English_name}}<br/>
+                <td>
+          English_name
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          irrigation_quantity :  {{p.irrigation_quantity}}<br/>
+                <td>
+          irrigation_quantity
+                      </td>
+                <td>
+          irrigation_quantity
+                      </td>
+                <td>
+          temprature_quantity
+                      </td>
+                <td>
+          temprature
+                      </td>
+                <td>
+          light_quantity
+                      </td>
+                <td>
+          light
+                      </td>
+                <td>
+          humidity
+                      </td>
+                <td>
+          humidity_quantity
+                      </td>
+                <td>
+          soil
+                      </td>
+                <td>
+          fertilizer
+                      </td>
+                <td>
+          problems
+                      </td>
+                <td>
+          potting
+                      </td>
+                <td>
+          poisonous
+                      </td>
+                <td>
+          sensibility
+                      </td>
+                    </tr>
+            <tr>
+                <td>
+                    {{p.name}}
+                </td>
+                <td>
+                      {{p.English_name}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          irrigation_quantity : {{p.irrigation}}
+                <td>
+                      {{p.irrigation_quantity}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          temprature_quantity : {{p.temprature_quantity}}<br/>
+                <td>
+                      {{p.irrigation}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          temprature : {{p.temprature}}<br/>
+                <td>
+                      {{p.temprature_quantity}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          light_quantity : {{p.light_quantity}}<br/>
+                <td>
+                      {{p.temprature}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          light : {{p.light}}<br/>
+                <td>
+                      {{p.light_quantity}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          humidity_quantity : {{p.humidity_quantity}}<br/>
+                <td>
+                      {{p.light}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          humidity : {{p.humidity}}<br/>
+                <td>
+                      {{p.humidity_quantity}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          soil : {{p.soil}}<br/>
+                <td>
+                      {{p.humidity}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          fertilizer : {{p.fertilizer}}<br/>
+                <td>
+                      {{p.soil}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          problems : {{p.problems}}<br/>
+                <td>
+                      {{p.fertilizer}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          potting : {{p.potting}}<br/>
+                <td>
+                      {{p.problems}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          poisonous : {{p.poisonous}}<br/>
+                <td>
+                      {{p.potting}}
                   </td>
-                </tr>
-                <tr>
-                  <td>
-          sensibility : {{p.sensibility}}<br/>
+                <td>
+                      {{p.poisonous}}
+                  </td>
+                <td>
+                      {{p.sensibility}}
                   </td>
                 </tr>
                 </form>
