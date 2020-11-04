@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime
 from . import models,forms
+from PIL import Image
 
 def BasicView(request):
     return render(request,'basic.html')
