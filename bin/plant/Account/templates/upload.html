@@ -16,7 +16,7 @@
 
         </form>
         {% if url %}
-          <img src = "{{url}}"/>
+          <img src = "{{url}}" width = "300 px" height = "300 px"/>
           <h2><a href = "{% url 'Account:HomeView' %}">back to home</a></h2>
         {% endif %}
       {% endblock %}

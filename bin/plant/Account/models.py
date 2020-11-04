@@ -8,10 +8,11 @@ class Information(models.Model) :
     password = models.CharField(max_length = 100)
     email = models.EmailField(max_length = 254)
     date = models.DateTimeField()
-    profile = models.FileField(upload_to = 'media', null = True, default = 'pic.jpg')
+    profile = models.ImageField(default = 'pic.jpg')
 
     def __str__(self):
         return str(self.username)
+
 """    def save(self, *args , **kwargs):
         super().save(*args , **kwargs)
         img = Image.open(self.profile.path)

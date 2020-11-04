@@ -14,7 +14,7 @@
           <h2><a href = "{% url 'Account:UploadـprofileView' %}">upload profile</a></h2>
         {% endif %}
         {% if profile %}
-          <img src = "{{ profile }}" width = "300 px" height = "300 px"/>
+          <img src = "{{ profile }}" >
           <h2><a href = "{% url 'Account:UploadـprofileView' %}">change profile</a></h2>
         {% endif %}
           <button type="submit" class="btn btn-primary btn-raised">

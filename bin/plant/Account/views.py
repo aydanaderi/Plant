@@ -92,11 +92,14 @@ def ProfileView(request):
             username1 = str(l.username)
             username2 = str(request.user.username)
             if username1 == username2:
-                if l.profile == "" :
+                if l.profile == 'pic.jpg' :
                     context['url'] = 'url'
                     break
                 else :
-                    context['profile'] = l.profile
+                    output_size = (100, 100)
+                    img = Image.open('/home/ayda/Documents/git/Plant/bin/plant'+str(l.profile)).thumbnail(output_size)
+                    print(img)
+                    context['profile'] = img
                     break
         context['username'] = request.user.username
         email = ""
