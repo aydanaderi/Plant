@@ -96,10 +96,10 @@ def ProfileView(request):
                     context['url'] = 'url'
                     break
                 else :
-                    output_size = (100, 100)
-                    img = Image.open('/home/ayda/Documents/git/Plant/bin/plant'+str(l.profile)).thumbnail(output_size)
-                    print(img)
-                    context['profile'] = img
+                    img = Image.open('/home/ayda/Documents/git/Plant/bin/plant'+str(l.profile))
+                    img.thumbnail((200,200),Image.ANTIALIAS)
+                    img.save('/home/ayda/Documents/git/Plant/bin/plant'+str(l.profile),"PNG")
+                    context['profile'] = l.profile
                     break
         context['username'] = request.user.username
         email = ""
