@@ -9,7 +9,7 @@ class Information(models.Model) :
     email = models.EmailField(max_length = 254)
     date = models.DateTimeField()
     profile = models.ImageField(default = 'pic.jpg')
-    message = ArrayField(models.CharField(max_length = 500, blank = True,default = list),default = list)
+    message = ArrayField(models.CharField(max_length = 500, blank = True),default = list)
 
     def __str__(self):
         return str(self.username)
