@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^change_password/$', views.Change_passwordView, name = 'Change_passwordView'),
     url(r'^check_email/$', views.Check_emailView, name = 'Check_email'),
     url(r'^(?P<username_id>[0-9]+)/reset/$', views.Reset_passwordView , name = 'Reset_password'),
+    url(r'^show_messages/$', views.ShowMessagesView, name = 'ShowMessagesView'),
 ]

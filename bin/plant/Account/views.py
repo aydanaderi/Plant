@@ -147,7 +147,8 @@ def Change_passwordView(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
+            date = datetime.now()
+            messages.success(request, 'Your password was successfully updated!('+ str(date) +')')
             raw_password = form.cleaned_data.get('new_password1')
             oldpassword = form.cleaned_data.get('old_password')
             for l in models.Information.objects.all():
@@ -156,7 +157,8 @@ def Change_passwordView(request):
                         models.Information.objects.filter(username = l.username).update(password = raw_password)
             return redirect('/profile')
         else:
-            messages.error(request, 'Please correct the error below.')
+            date = datetime.now()
+            messages.error(request, 'Please correct the error below.('+ str(date) +')')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
@@ -197,3 +199,6 @@ def Reset_passwordView(request,username_id):
         else :
             return render(request, 'reset_password.html', {'error': 'The password entered is incorrect'})
     return render(request,'reset_password.html')
+
+def ShowMessagesView(request):
+    return render(request,'show_messages.html')
